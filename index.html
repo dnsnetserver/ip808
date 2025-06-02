@@ -75,6 +75,36 @@
   <!-- JavaScript -->
   
   <script>
+    const stepEditor = document.getElementById("stepEditor");
+const stepsPerTrack = 16;
+
+function createStepRow(trackName) {
+  const row = document.createElement("div");
+  row.className = "step-row";
+
+  const label = document.createElement("div");
+  label.className = "step-label";
+  label.textContent = trackName;
+  row.appendChild(label);
+
+  const grid = document.createElement("div");
+  grid.className = "step-grid";
+
+  for (let i = 0; i < stepsPerTrack; i++) {
+    const step = document.createElement("div");
+    step.className = "step";
+    step.addEventListener("click", () => {
+      step.classList.toggle("active");
+    });
+    grid.appendChild(step);
+  }
+
+  row.appendChild(grid);
+  stepEditor.appendChild(row);
+}
+
+// Always start with a default sample track linked to Track 1
+createStepRow("Synth");
     const presetOptions = document.getElementById("presetOptions");
     const presets = {
       "Synth Lead": ["Bright Pad", "Soft Keys", "Analog Lead"],
