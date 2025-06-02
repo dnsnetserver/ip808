@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Music Sequencer Dashboard</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>🎵 AI Sequencer</h2>
+      <nav>
+        <ul>
+          <li>🎼 Composition</li>
+          <li>🧠 AI Assistant</li>
+          <li>🎚 Mixer</li>
+          <li>🔊 Mastering</li>
+          <li>📁 Project Manager</li>
+          <li>🚀 Export & Share</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main UI Panel -->
+    <main class="main-content">
+
+      <!-- Toolbar -->
+      <header class="toolbar">
+        <button>New Project</button>
+        <button>Save</button>
+        <button>AI Generate</button>
+        <input type="text" placeholder="Search sounds..." />
+      </header>
+
+      <!-- Grid Layout for Modules -->
+      <section class="grid-layout">
+
+        <!-- Composition Module -->
+        <div class="module" draggable="true">
+          <h3>🎼 Compose</h3>
+          <p>Add tracks, loops, and arrange timeline.</p>
+        </div>
+
+        <!-- AI Assistant -->
+        <div class="module" draggable="true">
+          <h3>🧠 AI Assistant</h3>
+          <p>Generate loops, melodies, or sound blends by prompt.</p>
+        </div>
+
+        <!-- Mixer Module -->
+        <div class="module" draggable="true">
+          <h3>🎚 Mixing</h3>
+          <p>Volume, pan, effects, and automation control.</p>
+        </div>
+
+        <!-- Mastering Module -->
+        <div class="module" draggable="true">
+          <h3>🔊 Mastering</h3>
+          <p>Finalize track using AI mastering or manual tools.</p>
+        </div>
+
+        <!-- Project Manager -->
+        <div class="module" draggable="true">
+          <h3>📁 Project Manager</h3>
+          <p>Save, version, collaborate, and review tracks.</p>
+        </div>
+
+        <!-- Export & Share -->
+        <div class="module" draggable="true">
+          <h3>🚀 Export & Share</h3>
+          <p>Export audio and publish to platforms.</p>
+        </div>
+
+      </section>
+    </main>
+  </div>
+</body>
+</html>
