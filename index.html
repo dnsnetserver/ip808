@@ -11,11 +11,37 @@
 
     <!-- Top Toolbar -->
     <header class="toolbar">
-      <div class="toolbar-left">
-        <button class="btn blue">New</button>
-        <button class="btn green">Play</button>
-        <button class="btn red">Stop</button>
-      </div>
+<!-- Playback Module -->
+<section class="playback-module">
+  <div class="controls">
+    <button class="btn play" id="playBtn">▶ Play</button>
+    <button class="btn stop" id="stopBtn">■ Stop</button>
+    <button class="btn loop" id="loopBtn">🔁 Loop</button>
+    <select class="loop-duration" id="loopDuration">
+      <option value="5">Loop 5s</option>
+      <option value="10">Loop 10s</option>
+      <option value="15">Loop 15s</option>
+      <option value="20">Loop 20s</option>
+    </select>
+  </div>
+
+  <div class="meters">
+    <div class="volume-meter">
+      <label>🔊 Volume</label>
+      <div class="meter-bar" id="volumeBar"></div>
+    </div>
+
+    <div class="tempo-detector">
+      <label>🎵 Tempo</label>
+      <input type="number" id="tempoInput" value="120" min="60" max="200" /> BPM
+    </div>
+
+    <div class="metronome-counter">
+      <label>⏱ Metronome</label>
+      <div id="metronomeDisplay">1</div>
+    </div>
+  </div>
+</section>
       <div class="toolbar-right">
         <select class="genre-select" id="genreSelect">
           <option>EDM</option>
