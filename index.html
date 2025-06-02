@@ -1,10 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>iOS-Style Music Sequencer</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Music Sequencer Pro</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #1C1C1E;
+      color: #FFFFFF;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #2C2C2E;
+      padding: 10px 20px;
+      border-bottom: 1px solid #3A3A3C;
+    }
+
+    .toolbar-left, .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      background-color: #3A3A3C;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #505050;
+    }
+
+    .btn.blue { background-color: #0A84FF; }
+    .btn.green { background-color: #30D158; }
+    .btn.red { background-color: #FF375F; }
+
+    .genre-select {
+      padding: 8px;
+      border-radius: 6px;
+      background: #3A3A3C;
+      border: none;
+      color: #FFFFFF;
+    }
+
+    .workspace {
+      display: flex;
+      flex-grow: 1;
+      overflow: hidden;
+    }
+
+    .track-sidebar {
+      background-color: #2C2C2E;
+      padding: 10px;
+      width: 120px;
+      border-right: 1px solid #3A3A3C;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .track-label {
+      background-color: #3A3A3C;
+      padding: 8px;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+      color: #D1D1D6;
+    }
+
+    .sequencer {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .lane {
+      background-color: #2C2C2E;
+      border: 2px dashed #0A84FF;
+      padding: 15px;
+      border-radius: 6px;
+      cursor: grab;
+      transition: transform 0.2s;
+    }
+
+    .lane:active {
+      transform: scale(1.03);
+      cursor: grabbing;
+    }
+
+    .right-sidebar {
+      background-color: #2C2C2E;
+      width: 240px;
+      border-left: 1px solid #3A3A3C;
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .right-sidebar h4 {
+      margin-top: 0;
+      color: #0A84FF;
+    }
+
+    .right-sidebar input {
+      padding: 8px;
+      background-color: #1C1C1E;
+      border: 1px solid #3A3A3C;
+      border-radius: 6px;
+      color: #D1D1D6;
+      margin-bottom: 10px;
+    }
+
+    .right-sidebar .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .playlist {
+      flex-grow: 1;
+      overflow-y: auto;
+      background: #1C1C1E;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .playlist-item {
+      padding: 8px;
+      border-bottom: 1px solid #3A3A3C;
+      color: #D1D1D6;
+    }
+
+    .preset-panel {
+      background-color: #2C2C2E;
+      border-top: 1px solid #3A3A3C;
+      padding: 10px 20px;
+      height: 150px;
+      overflow-x: auto;
+      flex-shrink: 0;
+    }
+
+    .preset-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .preset-header h4 {
+      margin: 0;
+      color: #0A84FF;
+    }
+
+    .preset-options {
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+    }
+
+    .preset-tile {
+      background-color: #3A3A3C;
+      border-radius: 6px;
+      padding: 10px 16px;
+      color: #fff;
+      cursor: pointer;
+      min-width: 120px;
+      text-align: center;
+      transition: background-color 0.2s;
+    }
+
+    .preset-tile:hover {
+      background-color: #505050;
+    }
+  </style>
 </head>
 <body>
   <div class="app-container">
@@ -17,12 +205,20 @@
         <button class="btn red">Stop</button>
       </div>
       <div class="toolbar-right">
-        <button class="btn">AI Generate</button>
-        <input type="text" placeholder="Search samples..." />
+        <select class="genre-select" id="genreSelect">
+          <option>Hip Hop</option>
+          <option>R&B</option>
+          <option>Rock</option>
+          <option>EDM</option>
+          <option>Afrobeats</option>
+        </select>
+        <button class="btn" onclick="generateTemplate()">Generate Template</button>
+        <button class="btn">Export</button>
+        <button class="btn">Settings</button>
       </div>
     </header>
 
-    <!-- Track View -->
+    <!-- Workspace -->
     <main class="workspace">
       <!-- Track Controls -->
       <aside class="track-sidebar">
@@ -33,7 +229,7 @@
         <div class="track-label">Master</div>
       </aside>
 
-      <!-- Sequencer Grid -->
+      <!-- Sequencer -->
       <section class="sequencer">
         <div class="lane" draggable="true">🎧 Synth Lead</div>
         <div class="lane" draggable="true">🤖 AI Melody</div>
@@ -41,20 +237,68 @@
         <div class="lane" draggable="true">🥁 Drum Machine</div>
         <div class="lane" draggable="true">📊 Master Bus</div>
       </section>
+
+      <!-- Playlist/Browser Sidebar -->
+      <aside class="right-sidebar">
+        <h4>Sample Browser</h4>
+        <input type="text" placeholder="Search samples..." />
+        <button class="btn blue">Import Sound</button>
+        <div class="playlist">
+          <div class="playlist-item">Kick 808</div>
+          <div class="playlist-item">Snare Tight</div>
+          <div class="playlist-item">Vocal FX Echo</div>
+          <div class="playlist-item">Hi-Hat Loop</div>
+        </div>
+      </aside>
     </main>
 
-    <!-- Preset Panel -->
+    <!-- Presets Panel -->
     <section class="preset-panel" id="presetPanel">
       <div class="preset-header">
         <h4>Presets</h4>
-        <p>Select a track or module to view available presets.</p>
+        <p>Select a track to view available presets.</p>
       </div>
       <div class="preset-options" id="presetOptions">
-        <!-- Presets dynamically inserted here -->
+        <!-- Presets populate here -->
       </div>
     </section>
   </div>
-    </main>
-  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const presetOptions = document.getElementById("presetOptions");
+    const presets = {
+      "Synth Lead": ["Bright Pad", "Soft Keys", "Analog Lead"],
+      "AI Melody": ["AI Jazz Improv", "AI EDM Hook", "AI Chill Lofi"],
+      "FX Rack": ["Stereo Spread", "Reverb Space", "Vocal Chop"],
+      "Drum Machine": ["Trap Kit", "Boom Bap Set", "808 Bassline"],
+      "Master Bus": ["EDM Master", "Pop Shine", "Hip-Hop Punch"]
+    };
+
+    document.querySelectorAll(".lane").forEach((lane) => {
+      lane.addEventListener("click", () => {
+        const key = lane.textContent.replace(/^[^a-zA-Z]+/, "").trim();
+        const matchedPresets = presets[key];
+        presetOptions.innerHTML = "";
+
+        if (matchedPresets) {
+          matchedPresets.forEach(preset => {
+            const tile = document.createElement("div");
+            tile.className = "preset-tile";
+            tile.textContent = preset;
+            presetOptions.appendChild(tile);
+          });
+        } else {
+          presetOptions.innerHTML = "<div class='preset-tile'>No presets available</div>";
+        }
+      });
+    });
+
+    function generateTemplate() {
+      const genre = document.getElementById("genreSelect").value;
+      alert(`AI is generating a ${genre} starter template...`);
+      // Future: populate lanes/presets dynamically based on genre
+    }
+  </script>
 </body>
 </html>
