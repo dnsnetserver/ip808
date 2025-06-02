@@ -6,7 +6,7 @@
   <title>iOS-Style Music Sequencer</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+body>
   <div class="app-container">
 
     <!-- Top Toolbar -->
@@ -35,22 +35,25 @@
 
       <!-- Sequencer Grid -->
       <section class="sequencer">
-        <div class="lane" draggable="true">🎵 Loop A</div>
-        <div class="lane" draggable="true">🎹 AI Melody</div>
-        <div class="lane" draggable="true">🧠 FX Stack</div>
-        <div class="lane" draggable="true">🥁 Drum Fill</div>
-        <div class="lane" draggable="true">🔊 Master Chain</div>
+        <div class="lane" draggable="true">🎧 Synth Lead</div>
+        <div class="lane" draggable="true">🤖 AI Melody</div>
+        <div class="lane" draggable="true">🎛 FX Rack</div>
+        <div class="lane" draggable="true">🥁 Drum Machine</div>
+        <div class="lane" draggable="true">📊 Master Bus</div>
       </section>
-      <!-- Preset Panel -->
-<section class="preset-panel" id="presetPanel">
-  <div class="preset-header">
-    <h4>Presets</h4>
-    <p>Select a track or module to view available presets.</p>
+    </main>
+
+    <!-- Preset Panel -->
+    <section class="preset-panel" id="presetPanel">
+      <div class="preset-header">
+        <h4>Presets</h4>
+        <p>Select a track or module to view available presets.</p>
+      </div>
+      <div class="preset-options" id="presetOptions">
+        <!-- Presets dynamically inserted here -->
+      </div>
+    </section>
   </div>
-  <div class="preset-options" id="presetOptions">
-    <!-- Placeholder presets will be populated here -->
-  </div>
-</section>
     </main>
   </div>
 </body>
