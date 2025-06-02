@@ -106,3 +106,48 @@ body {
   transform: scale(1.03);
   cursor: grabbing;
 }
+/* Preset Panel */
+.preset-panel {
+  background-color: #2C2C2E;
+  border-top: 1px solid #3A3A3C;
+  padding: 10px 20px;
+  color: #D1D1D6;
+  height: 150px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
+
+.preset-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.preset-header h4 {
+  margin: 0;
+  color: #0A84FF;
+}
+
+.preset-options {
+  margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+}
+
+.preset-tile {
+  background-color: #3A3A3C;
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #fff;
+  cursor: pointer;
+  min-width: 120px;
+  text-align: center;
+  transition: background-color 0.2s;
+}
+
+.preset-tile:hover {
+  background-color: #505050;
+}
+
+
