@@ -237,7 +237,33 @@ body {
       width: 100%;
       margin-bottom: 10px;
     }
+.library-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  gap: 6px;
+}
 
+.icon-btn {
+  background-color: #3A3A3C;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.icon-btn:hover {
+  background-color: #505050;
+}
+
+.playlist-nav {
+  display: flex;
+  gap: 4px;
+}
     .playlist {
       flex-grow: 1;
       overflow-y: auto;
