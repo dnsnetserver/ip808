@@ -68,34 +68,31 @@
       </section>
       <!-- Playlist/Browser Sidebar -->
       <aside class="right-sidebar">
-        <h4>Sample Library</h4>
-        <input type="text" placeholder="Search samples..." />
-        <div class="playlist">
-          <div class="playlist-item">Drum Samples</div>
-          <div class="playlist-item">Guitar Samples</div>
-          <div class="playlist-item">Piano Samples</div>
-          <div class="playlist-item">Percussion Samples</div>
-          <div class="playlist-item">Synth Loops</div>
-          <div class="playlist-item">Vocal Samples</div>
-      
-        </div>
-            <button class="btn blue">Import Sound</button>
-        
-      </aside>
-    </main>
+  <h4>Sample Library</h4>
+  <input type="text" placeholder="Search samples..." />
 
-    <!-- Presets Panel -->
-    <section class="preset-panel" id="presetPanel">
-      <div class="preset-header">
-        <h4>Presets</h4>
-        <p>Select a track to view available presets.</p>
-      </div>
-      <div class="preset-options" id="presetOptions">
-        <!-- Presets populate here -->
-      </div>
-    </section>
+  <!-- Navigation Controls -->
+  <div class="library-controls">
+    <button class="icon-btn" id="refreshBtn" title="Refresh Library">🔄</button>
+    <button class="icon-btn" id="toggleBtn" title="Toggle Categories">📂</button>
+    <div class="playlist-nav">
+      <button class="icon-btn" id="navLeft" title="Scroll Left">⬅️</button>
+      <button class="icon-btn" id="navRight" title="Scroll Right">➡️</button>
+    </div>
   </div>
 
+  <!-- Playlist Items -->
+  <div class="playlist" id="samplePlaylist">
+    <div class="playlist-item">Drum Samples</div>
+    <div class="playlist-item">Guitar Samples</div>
+    <div class="playlist-item">Piano Samples</div>
+    <div class="playlist-item">Percussion Samples</div>
+    <div class="playlist-item">Synth Loops</div>
+    <div class="playlist-item">Vocal Samples</div>
+  </div>
+
+  <button class="btn blue">Import Sound</button>
+</aside>
   <!-- JavaScript -->
   
   <script>
