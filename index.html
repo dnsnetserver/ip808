@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Music Sequencer Pro</title>
+  <title>Music Playlist Editor</title>
   <style>
     body {
       margin: 0;
@@ -16,7 +16,6 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden;
     }
 
     .toolbar {
@@ -28,37 +27,19 @@
       border-bottom: 1px solid #3A3A3C;
     }
 
-    .toolbar-left, .toolbar-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .toolbar-right select,
     .btn {
       background-color: #3A3A3C;
       color: #FFFFFF;
       border: none;
+      padding: 8px 12px;
+      margin-left: 10px;
       border-radius: 6px;
-      padding: 8px 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
     }
 
     .btn:hover {
       background-color: #505050;
-    }
-
-    .btn.blue { background-color: #0A84FF; }
-    .btn.green { background-color: #30D158; }
-    .btn.red { background-color: #FF375F; }
-
-    .genre-select {
-      padding: 8px;
-      border-radius: 6px;
-      background: #3A3A3C;
-      border: none;
-      color: #FFFFFF;
+      cursor: pointer;
     }
 
     .workspace {
@@ -68,19 +49,19 @@
     }
 
     .track-sidebar {
+      width: 120px;
       background-color: #2C2C2E;
       padding: 10px;
-      width: 120px;
-      border-right: 1px solid #3A3A3C;
       display: flex;
       flex-direction: column;
       gap: 10px;
+      border-right: 1px solid #3A3A3C;
     }
 
     .track-label {
       background-color: #3A3A3C;
-      padding: 8px;
       border-radius: 4px;
+      padding: 8px;
       text-align: center;
       font-weight: bold;
       color: #D1D1D6;
@@ -90,213 +71,181 @@
       flex-grow: 1;
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      padding: 15px;
-      overflow-y: auto;
+      padding: 10px;
+      overflow: auto;
+      background-color: #1C1C1E;
+      gap: 10px;
     }
 
-    .lane {
+    .track-row {
       background-color: #2C2C2E;
-      border: 2px dashed #0A84FF;
-      padding: 15px;
+      border: 1px solid #3A3A3C;
+      height: 60px;
       border-radius: 6px;
-      cursor: grab;
-      transition: transform 0.2s;
+      position: relative;
     }
 
-    .lane:active {
-      transform: scale(1.03);
-      cursor: grabbing;
+    .clip {
+      position: absolute;
+      height: 100%;
+      width: 100px;
+      background-color: #0A84FF;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+      cursor: move;
     }
 
     .right-sidebar {
-      background-color: #2C2C2E;
       width: 240px;
+      background-color: #2C2C2E;
+      padding: 10px;
       border-left: 1px solid #3A3A3C;
       display: flex;
       flex-direction: column;
-      padding: 10px;
     }
 
-    .right-sidebar h4 {
-      margin-top: 0;
-      color: #0A84FF;
-    }
-
-    .right-sidebar input {
+    .right-sidebar input,
+    .right-sidebar button {
+      margin-bottom: 10px;
       padding: 8px;
       background-color: #1C1C1E;
       border: 1px solid #3A3A3C;
-      border-radius: 6px;
       color: #D1D1D6;
-      margin-bottom: 10px;
-    }
-
-    .right-sidebar .btn {
-      width: 100%;
-      margin-bottom: 10px;
+      border-radius: 6px;
     }
 
     .playlist {
       flex-grow: 1;
       overflow-y: auto;
       background: #1C1C1E;
-      padding: 8px;
       border-radius: 6px;
+      padding: 10px;
     }
 
     .playlist-item {
+      background-color: #3A3A3C;
       padding: 8px;
-      border-bottom: 1px solid #3A3A3C;
-      color: #D1D1D6;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      cursor: grab;
+    }
+
+    .playlist-item:active {
+      cursor: grabbing;
     }
 
     .preset-panel {
       background-color: #2C2C2E;
-      border-top: 1px solid #3A3A3C;
       padding: 10px 20px;
       height: 150px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
-
-    .preset-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-
-    .preset-header h4 {
-      margin: 0;
-      color: #0A84FF;
-    }
-
-    .preset-options {
-      margin-top: 10px;
-      display: flex;
-      gap: 12px;
-      overflow-x: auto;
+      border-top: 1px solid #3A3A3C;
     }
 
     .preset-tile {
+      display: inline-block;
       background-color: #3A3A3C;
-      border-radius: 6px;
-      padding: 10px 16px;
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 4px;
       color: #fff;
       cursor: pointer;
-      min-width: 120px;
-      text-align: center;
-      transition: background-color 0.2s;
-    }
-
-    .preset-tile:hover {
-      background-color: #505050;
     }
   </style>
 </head>
 <body>
   <div class="app-container">
-
     <!-- Top Toolbar -->
     <header class="toolbar">
       <div class="toolbar-left">
-        <button class="btn blue">New</button>
-        <button class="btn green">Play</button>
-        <button class="btn red">Stop</button>
+        <button class="btn">New</button>
+        <button class="btn">Play</button>
+        <button class="btn">Stop</button>
       </div>
       <div class="toolbar-right">
-        <select class="genre-select" id="genreSelect">
-          <option>EDM</option>
+        <select id="genreSelect">
           <option>Hip Hop</option>
-          <option>Pop</option>
+          <option>R&B</option>
           <option>Rock</option>
+          <option>EDM</option>
+          <option>Afrobeats</option>
         </select>
         <button class="btn" onclick="generateTemplate()">Generate Template</button>
-        <button class="btn">Export</button>
-        <button class="btn">Settings</button>
       </div>
     </header>
 
-    <!-- Workspace -->
+    <!-- Main Content -->
     <main class="workspace">
-      <!-- Track Controls -->
+      <!-- Track Names -->
       <aside class="track-sidebar">
         <div class="track-label">Track 1</div>
         <div class="track-label">Track 2</div>
-        <div class="track-label">Synth</div>
-        <div class="track-label">Drums</div>
-        <div class="track-label">Master</div>
+        <div class="track-label">Track 3</div>
+        <div class="track-label">Track 4</div>
       </aside>
 
-      <!-- Sequencer -->
-      <section class="sequencer">
-        <div class="lane" draggable="true">🎧 Synth Lead</div>
-        <div class="lane" draggable="true">🤖 AI Melody</div>
-        <div class="lane" draggable="true">🎛 FX Rack</div>
-        <div class="lane" draggable="true">🥁 Drum Machine</div>
-        <div class="lane" draggable="true">📊 Master Bus</div>
+      <!-- Piano Roll / Playlist Editor -->
+      <section class="sequencer" id="sequencer">
+        <div class="track-row" data-track="1"></div>
+        <div class="track-row" data-track="2"></div>
+        <div class="track-row" data-track="3"></div>
+        <div class="track-row" data-track="4"></div>
       </section>
 
-      <!-- Playlist/Browser Sidebar -->
+      <!-- Sidebar -->
       <aside class="right-sidebar">
-        <h4>Sample Browser</h4>
-        <input type="text" placeholder="Search samples..." />
-        <button class="btn blue">Import Sound</button>
+        <input type="text" placeholder="Search samples...">
+        <button>Import Sound</button>
         <div class="playlist">
-          <div class="playlist-item">Kick 808</div>
-          <div class="playlist-item">Snare Tight</div>
-          <div class="playlist-item">Vocal FX Echo</div>
-          <div class="playlist-item">Hi-Hat Loop</div>
+          <div class="playlist-item" draggable="true">Kick</div>
+          <div class="playlist-item" draggable="true">Snare</div>
+          <div class="playlist-item" draggable="true">Hi-Hat</div>
+          <div class="playlist-item" draggable="true">Synth Loop</div>
         </div>
       </aside>
     </main>
 
-    <!-- Presets Panel -->
-    <section class="preset-panel" id="presetPanel">
-      <div class="preset-header">
-        <h4>Presets</h4>
-        <p>Select a track to view available presets.</p>
-      </div>
-      <div class="preset-options" id="presetOptions">
-        <!-- Presets populate here -->
-      </div>
+    <!-- Presets -->
+    <section class="preset-panel">
+      <div class="preset-tile">Pop Shine</div>
+      <div class="preset-tile">808 Bounce</div>
+      <div class="preset-tile">LoFi Vibes</div>
     </section>
   </div>
 
-  <!-- JavaScript -->
   <script>
-    const presetOptions = document.getElementById("presetOptions");
-    const presets = {
-      "Synth Lead": ["Bright Pad", "Soft Keys", "Analog Lead"],
-      "AI Melody": ["AI Jazz Improv", "AI EDM Hook", "AI Chill Lofi"],
-      "FX Rack": ["Stereo Spread", "Reverb Space", "Vocal Chop"],
-      "Drum Machine": ["Trap Kit", "Boom Bap Set", "808 Bassline"],
-      "Master Bus": ["EDM Master", "Pop Shine", "Hip-Hop Punch"]
-    };
+    const playlistItems = document.querySelectorAll(".playlist-item");
+    const trackRows = document.querySelectorAll(".track-row");
 
-    document.querySelectorAll(".lane").forEach((lane) => {
-      lane.addEventListener("click", () => {
-        const key = lane.textContent.replace(/^[^a-zA-Z]+/, "").trim();
-        const matchedPresets = presets[key];
-        presetOptions.innerHTML = "";
+    playlistItems.forEach(item => {
+      item.addEventListener("dragstart", e => {
+        e.dataTransfer.setData("text/plain", item.textContent);
+      });
+    });
 
-        if (matchedPresets) {
-          matchedPresets.forEach(preset => {
-            const tile = document.createElement("div");
-            tile.className = "preset-tile";
-            tile.textContent = preset;
-            presetOptions.appendChild(tile);
-          });
-        } else {
-          presetOptions.innerHTML = "<div class='preset-tile'>No presets available</div>";
-        }
+    trackRows.forEach(row => {
+      row.addEventListener("dragover", e => {
+        e.preventDefault();
+      });
+
+      row.addEventListener("drop", e => {
+        e.preventDefault();
+        const data = e.dataTransfer.getData("text/plain");
+        const clip = document.createElement("div");
+        clip.className = "clip";
+        clip.style.left = `${Math.floor(Math.random() * (row.clientWidth - 120))}px`;
+        clip.textContent = data;
+        row.appendChild(clip);
       });
     });
 
     function generateTemplate() {
       const genre = document.getElementById("genreSelect").value;
-      alert(`AI is generating a ${genre} starter template...`);
-      // Future: populate lanes/presets dynamically based on genre
+      alert(`AI is generating a ${genre} music template...`);
+      // Logic to populate tracks dynamically can go here
     }
   </script>
 </body>
