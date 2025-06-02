@@ -79,28 +79,45 @@ body {
       color: #D1D1D6;
     }
 
-    .sequencer {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      padding: 15px;
-      overflow-y: auto;
-    }
+.step-editor {
+  flex-grow: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
 
-    .lane {
-      background-color: #2C2C2E;
-      border: 2px dashed #0A84FF;
-      padding: 15px;
-      border-radius: 6px;
-      cursor: grab;
-      transition: transform 0.2s;
-    }
+.step-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-    .lane:active {
-      transform: scale(1.03);
-      cursor: grabbing;
-    }
+.step-label {
+  width: 80px;
+  font-weight: bold;
+  color: #D1D1D6;
+}
+
+.step-grid {
+  display: flex;
+  gap: 6px;
+}
+
+.step {
+  width: 24px;
+  height: 24px;
+  background: #3A3A3C;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.step.active {
+  background-color: #0A84FF;
+  box-shadow: 0 0 4px #0A84FF;
+}
 
     .right-sidebar {
       background-color: #2C2C2E;
