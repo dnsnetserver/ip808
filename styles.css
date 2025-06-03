@@ -292,43 +292,44 @@ body {
       color: #D1D1D6;
     }
 
-    .preset-panel {
-      background-color: #2C2C2E;
-      border-top: 1px solid #3A3A3C;
-      padding: 10px 20px;
-      height: 150px;
-      overflow-x: auto;
-      flex-shrink: 0;
-    }
+.preset-panel {
+  background-color: #2C2C2E;
+  border-top: 1px solid #3A3A3C;
+  padding: 10px 20px;
+  height: 150px;
+  overflow-x: auto;
+  flex-shrink: 0;
+}
 
 .preset-header {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
-.mode-toggle {
-  display: flex;
-  gap: 10px;
+.preset-header h4 {
+  margin: 0;
+  color: #0A84FF;
+}
+
+.preset-options {
   margin-top: 10px;
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
 }
 
-.mode-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
+.preset-tile {
   background-color: #3A3A3C;
-  color: #FFFFFF;
+  border-radius: 6px;
+  padding: 10px 16px;
+  color: #fff;
   cursor: pointer;
-  font-weight: 500;
+  min-width: 120px;
+  text-align: center;
   transition: background-color 0.2s;
 }
 
-.mode-btn:hover {
+.preset-tile:hover {
   background-color: #505050;
-}
-
-.mode-btn.active {
-  background-color: #0A84FF;
-  color: white;
 }
