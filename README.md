@@ -1,1 +1,1 @@
-#Music sequencer 
+Composer and DJ 
